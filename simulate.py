@@ -4,7 +4,7 @@ from typing import List
 from tqdm import tqdm
 
 from rl_player import AIPlayer
-from utils import CELL_VELUE_PRINT, get_game_state, print_board
+from utils import get_game_state, print_board
 
 
 def ask_prompt(board: List[int]) -> int:
@@ -16,21 +16,16 @@ def ask_ai_random(board: List[int]) -> int:
     return random.choice([idx for idx in range(9) if board[idx] == 0])
 
 
-def simulate() -> None:
+def simulate(n_epochs: int = 10_000) -> None:
     board = [0] * 9
     ai_player = AIPlayer("P1", epsilon=0.0)
-    ai_player_2 = AIPlayer("P1", epsilon=0.0)
     ai_player.load_policy()
-    ai_player_2.load_policy()
-    ai_player_2.reverse_states()
 
     win_random = 0
     win_bot = 0
     draws = 0
-    lost_games_set = set()
-    lost_games = []
 
-    for i in tqdm(range(1_000_000)):
+    for i in tqdm(range(n_epochs), desc="Simulating games:"):
         board = [0] * 9
         turn = -1 if random.uniform(0, 1) < 0.5 else 1
         while True:
@@ -47,9 +42,6 @@ def simulate() -> None:
             if game_outcome in (-1, 1):
                 if game_outcome == -1:
                     win_random += 1
-                    if str(board) not in lost_games_set:
-                        lost_games_set.add(str(board))
-                        lost_games.append(board)
                 else:
                     win_bot += 1
                 break
@@ -64,4 +56,4 @@ def simulate() -> None:
 
 
 if __name__ == "__main__":
-    simulate()
+    simulate(n_epochs=10_000)

@@ -7,7 +7,7 @@ from utils import CELL_VELUE_PRINT, get_game_state, print_board
 
 def play() -> None:
     board = [0] * 9
-    ai_player = AIPlayer("P1", epsilon=0.0)
+    ai_player = AIPlayer("top", epsilon=0.0)
     ai_player.load_policy()
 
     print_board([CELL_VELUE_PRINT[cell] for cell in board])
@@ -24,7 +24,6 @@ def play() -> None:
 
         turn *= -1
         print_board([CELL_VELUE_PRINT[cell] for cell in board])
-
         game_outcome = get_game_state(board)
 
         if game_outcome in (-1, 1):

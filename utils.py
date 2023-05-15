@@ -1,7 +1,6 @@
 from typing import List
 
 CELL_VELUE_PRINT = {-1: "O", 0: " ", 1: "X"}
-
 NEW_LINE_DEL_STRING = "---+---+---"
 
 

@@ -7,15 +7,11 @@ from simulate import get_game_state
 from utils import encode_board
 
 
-def train(n_epochs=1_000_000):
-    ai_player = AIPlayer("P1")
+def train(n_epochs: int = 1_000_000, name: str = "adam") -> None:
+    ai_player = AIPlayer(name)
     ai_player_2 = AIPlayer("P2")
 
-    win_p1 = 0
-    win_p2 = 0
-    draws = 0
-
-    for _ in tqdm(range(n_epochs)):
+    for _ in tqdm(range(n_epochs), desc="Training games:"):
         board = [0] * 9
         ai_player.reset()
         ai_player_2.reset()
@@ -32,29 +28,23 @@ def train(n_epochs=1_000_000):
                 ai_player_2.add_state(encode_board(board))
 
             turn *= -1
-
             game_outcome = get_game_state(board)
 
             if game_outcome in (-1, 1, 2):
                 if game_outcome == 1:
                     ai_player.calc_reward(1)
                     ai_player_2.calc_reward(0)
-                    win_p1 += 1
                 elif game_outcome == -1:
                     ai_player.calc_reward(0)
                     ai_player_2.calc_reward(1)
-                    win_p2 += 1
                 else:
-                    ai_player.calc_reward(0.8)  # 0.5
-                    ai_player_2.calc_reward(0.8)  # 0.5
-                    draws += 1
-
+                    ai_player.calc_reward(0.8)
+                    ai_player_2.calc_reward(0.8)
                 break
 
     ai_player.save_policy()
-
-    print(win_p1, win_p2, draws)
+    print("The AI player was trained.")
 
 
 if __name__ == "__main__":
-    train()
+    train(n_epochs=1_000_000, name="adam")

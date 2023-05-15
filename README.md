@@ -13,6 +13,11 @@
 * [Setup](#setup)
     * [Windows](#windows)
     * [MacOS](#macos)
+* [Instructions](#instructions)
+    * [Running a model training](#running-a-model-training)
+    * [Running a simulation](#running-a-simulation)
+    * [Playing a game](#playing-a-game)
+    * [Pre-trained model policy](pre-trained-model-policy)
 * [Contributing](#contributing)
 * [License](#license)
 * [Contact](#contact)
@@ -40,6 +45,41 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
+## Instructions
+
+
+### Running a model training
+The default training uses Q-Learning (Reinforcement Learning) to teach the bot the game of Tic-Tac-Toe.
+It initializes two fresh models that play agains each other and continuously train.
+The default number of training games is `1_000_000`.
+
+You can perform training using the following command:
+```
+python train.py
+```
+
+### Running a simulation
+The model simulation brings up the pre-trained model and simulates Tic-Tac-Toe games with a random bot.
+The random bot stochastically selects an available free square and plays it.
+The goal of this operation is to evaluate the performance of the model.
+During experimentation, the best performing bot had 0 losses within `1_000_000` games played.
+The default number of games to play in the simulation script is `10_000`.
+
+You can run a simulation using the following command:
+```
+python simulate.py
+```
+
+### Playing a game
+You can play a human vs bot game using the following command:
+```
+python play.py
+```
+
+### Pre-trained model policy
+The `best_policy_top.json` file contains the optimal policy of the bot that performed best.
+This is the policy that the `play` script loads to play Tic-Tac-Toe against the human.
+Feel free to modify the code, so you play with a bot that you've trained. 
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -54,19 +94,11 @@ Contributions are what make the open source community such an amazing place to b
 
 
 
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
 <!-- CONTACT -->
 ## Contact
 Hristo Minkov - minkov.h@gmail.com
 
-Project Link: [https://mediaan-days.herokuapp.com/](https://mediaan-days.herokuapp.com/)
-
-Codebase Link: [https://github.com/icaka98/mediaan_days](https://github.com/icaka98/mediaan_days)
+Codebase Link: [https://github.com/icaka98/tic-tac-toe-rl](https://github.com/icaka98/tic-tac-toe-rl)
 
 
 
